@@ -8,7 +8,7 @@ from starlette.responses import JSONResponse
 from server.routers.base_router import BaseContext
 from server.routes import PG_USER, PG_LOGIN, V2_USER, V2_USER_AUTHENTICATION
 from server.services.authorization import authorize
-from application.contexts.user.user_service import UserService
+from application.contexts.user_service import UserService
 
 
 # Login Data Transfer Object Comment by Sayed

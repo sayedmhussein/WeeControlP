@@ -5,7 +5,7 @@ import uuid, hashlib
 from typing import Tuple
 
 
-def get_uuid():
+def get_new_uuid():
     return str(uuid.uuid4())
 
 def get_now_ts():

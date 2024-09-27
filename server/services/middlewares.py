@@ -5,7 +5,7 @@ from starlette.requests import Request
 from starlette.responses import Response, JSONResponse
 from starlette.status import HTTP_403_FORBIDDEN
 
-from application.contexts.user.user_service import UserService
+from application.contexts.user_service import UserService
 from infrastructure.repository import Database
 from server.services.secuity import get_claims
 

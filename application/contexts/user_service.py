@@ -3,7 +3,7 @@ from typing import Union
 from sqlalchemy import select, and_, or_, insert, update
 
 from application.exceptions import NotFoundException, NotAllowedException, BadRequestException
-from application.services import get_uuid, get_now_ts, is_correct_password
+from application.services import get_new_uuid, get_now_ts, is_correct_password
 from infrastructure.repository import Database
 from server.services.secuity import get_jwt, get_claims
 
@@ -32,7 +32,7 @@ class UserService(object):
             q_get_session = select(sessions).where(and_(sessions.c.userid==user.userid, sessions.c.device==device, sessions.c.terminated_ts == None))
             ses = session.execute(q_get_session).first()
             if not ses:
-                stmt = insert(sessions).values(sessionid=get_uuid(), userid=user.userid, device=device, created_ts=get_now_ts())
+                stmt = insert(sessions).values(sessionid=get_new_uuid(), userid=user.userid, device=device, created_ts=get_now_ts())
                 session.execute(stmt)
                 session.commit()
             ses = session.execute(q_get_session).first()

@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e4199f0-6e25-4c80-974b-473ab86a8245" name="Changes" comment="Init Commit">
-      <change afterPath="$PROJECT_DIR$/test/application/test_services.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/contexts/user/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/contexts/user/user_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/contexts/user/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/contexts/user/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/contexts/user_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/services.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/infrastructure/db.db" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/db.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/repository.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/application/services/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/application/services/jwt_service_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/application/jwt_service_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/route_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/route_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/user_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/middlewares.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +31,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "sayedmhussein"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/sayedmhussein/WeeControlP.git",
+    "accountId": "7075f28a-d5f9-491c-a93f-d0d6584cf0a2"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -47,7 +60,7 @@
     "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_head.executor": "Run",
     "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_invalid_user.executor": "Run",
     "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_two_sessions.executor": "Run",
-    "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_valid_login.executor": "Debug",
+    "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_valid_login.executor": "Run",
     "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_when_no_device_or_headers.executor": "Run",
     "Python tests.Python tests for test_base.BaseTestCase.executor": "Debug",
     "Python tests.Python tests for test_services.MyTestCase.test_something.executor": "Run",
@@ -70,11 +83,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/application/contexts" />
       <recent name="$PROJECT_DIR$/test/application" />
       <recent name="$PROJECT_DIR$/application/contexts/user" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in test">
+  <component name="RunManager">
     <configuration name="repository" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="WeeControlP" />
       <option name="ENV_FILES" value="" />
@@ -215,32 +229,30 @@
       <option name="project" value="LOCAL" />
       <updated>1727447445806</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Init Commit">
+      <option name="closed" value="true" />
+      <created>1727450294444</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727450294444</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init Commit" />
     <option name="LAST_COMMIT_MESSAGE" value="Init Commit" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/application/contexts/user/user_service.py</url>
-          <line>25</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/application/contexts/user/user_service.py</url>
-          <line>26</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/application/contexts/user/user_service.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

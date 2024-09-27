@@ -9,7 +9,7 @@ from starlette.responses import HTMLResponse
 from starlette.templating import Jinja2Templates
 
 from server.routers.user_router import UserContext
-from server.routes import PG_INDEX, V2_ESSENTIAL
+from server.routes import PG_INDEX, V2_ESSENTIAL, ClaimTypes
 
 
 class RoutingFactory(object):
@@ -33,9 +33,14 @@ def index_route(app: FastAPI):
         response.set_cookie("ads_id", "hello world")
         return response
 
-    @app.get(V2_ESSENTIAL+"/{item_id}")
-    async def read_item(item_id: int, q: Union[str, None] = None):
-        return {"item_id": item_id, "q": q}
+    @app.get(V2_ESSENTIAL+"/{name}")
+    async def read_item(name: str, q: Union[str, None] = None):
+        if name == "countries":
+            return dict(US="USA", EG="Egypt", SA="Saudi", CN="China")
+        elif name == "claims":
+            return list([e.value for e in ClaimTypes])
+        else:
+            return JSONResponse("not found", status_code=404)
 
 
 
