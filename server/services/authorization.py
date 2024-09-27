@@ -11,7 +11,6 @@ def authorize(claims: dict = None):
         async def authorize_function(*args, **kwargs):
             request: Request = kwargs["request"]
             token = request.state.token
-            # token = request.cookies.get("token")
             if token is None:
                 raise HTTPException(status_code=HTTP_401_UNAUTHORIZED, detail="No valid token found")
             c = get_claims(token)
@@ -29,4 +28,36 @@ def authorize(claims: dict = None):
     return decorator
 
 def claims_approved(required: dict, have: dict) -> bool:
+    """
+
+    :param required: contains the dict of claims which must exist.
+    :param have: contains the user claims.
+    :return: True if the user have all the required claims.
+    """
+    if len(required) > 0:
+        for c in required:
+            key = c.strip()
+            if key not in have.keys():
+                return False
+            if len(required[c]) > 0:
+                value: str = required[c].strip()
+                if "||" in value and "&&" in value:
+                    raise "Not Support to have both || and && at same claim value"
+                elif "||" in value:
+                    values = value.split("||")
+                    for v in values:
+                        if have[key] == v.strip():
+                            break
+                        if v == values[-1]:
+                            return False
+                elif "&&" in value:
+                    values = value.split("||")
+                    for v in values:
+                        if have[key] != v.strip():
+                            return False
+                else:
+                    for v in required[c].strip().split("||"):
+                        if required[c].strip() != have[c].strip():
+                            return False
+
     return True

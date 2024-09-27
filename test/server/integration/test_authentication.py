@@ -1,6 +1,7 @@
 import unittest
 
 from server.routes import V2_USER_AUTHENTICATION
+from server.services.authorization import authorize
 from test.server.integration.test_base import BaseTestCase, encode
 
 path = V2_USER_AUTHENTICATION
@@ -18,7 +19,6 @@ class AuthenticationTestCase(BaseTestCase):
 
         response = self.client.delete(path)
         assert response.is_client_error
-
 
     def test_invalid_user(self):
         with self.subTest():
@@ -111,6 +111,21 @@ class AuthenticationTestCase(BaseTestCase):
         self.client.headers["Device"] = "Test 1"
         response = self.client.head(path)
         assert response.is_success
+
+    def test_when_no_device_or_headers(self):
+        self.client.headers.clear()
+        self.client.cookies.clear()
+        self.client.headers["Host"] = ""
+        response = self.authenticate(ignore_error=True)
+        assert response.is_client_error
+
+    def test_when_username_camel(self):
+        self.authenticate(username="UserName")
+
+    def test_when_email_camel(self):
+        self.authenticate(username="UserName@WEEcontrol.com")
+
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -2,7 +2,7 @@ import os
 
 from sqlalchemy import create_engine, MetaData, text
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session, Session
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 db_path = os.path.join(basedir, 'db.db')
@@ -42,16 +42,16 @@ with engine.connect() as conn:
 
 
 class Database(object):
-    Session = SessionLocal
+    Session: sessionmaker[Session] = SessionLocal
     SessionAsync: async_sessionmaker[AsyncSession] = SessionLocalAsync
 
     class Tables(object):
-        Users = metadata.tables["user"]
-        Sessions = metadata.tables["usersession"]
-        UserNotifications = metadata.tables["usernotification"]
-        UserLogs = metadata.tables["userlog"]
-        Claims = metadata.tables["userclaim"]
         Addresses = metadata.tables["address"]
         Contacts = metadata.tables["contact"]
         Offices = metadata.tables["office"]
 
+        Users = metadata.tables["user"]
+        UserSessions = metadata.tables["usersession"]
+        UserNotifications = metadata.tables["usernotification"]
+        UserLogs = metadata.tables["userlog"]
+        UserClaims = metadata.tables["userclaim"]

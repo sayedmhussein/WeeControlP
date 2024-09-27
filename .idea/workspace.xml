@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e4199f0-6e25-4c80-974b-473ab86a8245" name="Changes" comment="Init Commit">
+      <change afterPath="$PROJECT_DIR$/test/server/services/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/server/services/test_authorization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/contexts/user/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/contexts/user/user_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/services.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/infrastructure/db.db" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/db.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/infrastructure/repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/repository.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/route_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/route_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/services/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/middlewares.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/user_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/authorization.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/authorization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/server/integration/test_authentication.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/integration/test_authentication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/integration/test_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/integration/test_base.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +26,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="Python Unit Test" />
       </list>
     </option>
   </component>
@@ -47,6 +51,7 @@
     &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_invalid_user.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_two_sessions.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_valid_login.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_when_no_device_or_headers.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for test_base.BaseTestCase.executor&quot;: &quot;Debug&quot;,
     &quot;Python tests.Python tests in integration.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests in jwt_service_test.py.executor&quot;: &quot;Run&quot;,
@@ -70,7 +75,7 @@
       <recent name="$PROJECT_DIR$/application/contexts/user" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_authentication.AuthenticationTestCase">
+  <component name="RunManager" selected="Python tests.Python tests in test">
     <configuration name="Python tests for test_authentication.AuthenticationTestCase" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="WeeControlP" />
       <option name="ENV_FILES" value="" />
@@ -83,21 +88,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_authentication.AuthenticationTestCase&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_authentication.AuthenticationTestCase.test_invalid_user" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="WeeControlP" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/server/integration" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_authentication.AuthenticationTestCase.test_invalid_user&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -131,7 +121,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_base.BaseTestCase" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_authentication.AuthenticationTestCase.test_when_no_device_or_headers" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="WeeControlP" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -142,24 +132,39 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_base.BaseTestCase&quot;" />
+      <option name="_new_target" value="&quot;test_authentication.AuthenticationTestCase.test_when_no_device_or_headers&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests in test" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="WeeControlP" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests in test" />
         <item itemvalue="Python tests.Python tests for test_authentication.AuthenticationTestCase" />
+        <item itemvalue="Python tests.Python tests for test_authentication.AuthenticationTestCase.test_when_no_device_or_headers" />
         <item itemvalue="Python tests.Python tests for test_authentication.AuthenticationTestCase.test_valid_login" />
         <item itemvalue="Python tests.Python tests for test_authentication.AuthenticationTestCase.test_two_sessions" />
-        <item itemvalue="Python tests.Python tests for test_authentication.AuthenticationTestCase.test_invalid_user" />
-        <item itemvalue="Python tests.Python tests for test_base.BaseTestCase" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-884f5ed5d46b-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.22855.92" />
+        <option value="bundled-python-sdk-0e3be3396995-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23339.19" />
       </set>
     </attachedChunks>
   </component>
@@ -188,11 +193,30 @@
       <option name="project" value="LOCAL" />
       <updated>1727421288972</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Init Commit">
+      <option name="closed" value="true" />
+      <created>1727434272331</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727434272331</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init Commit" />
     <option name="LAST_COMMIT_MESSAGE" value="Init Commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test/server/integration/test_authentication.py</url>
+          <line>98</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

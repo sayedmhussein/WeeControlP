@@ -64,15 +64,16 @@ class UserContext(BaseContext):
 
         @self.app.post(V2_USER_AUTHENTICATION, tags=["Authentication"])
         def user_login(dto: LoginDto, request: Request):
-            device = request.state.device
-            token = self.service.create_token(dto.username, dto.password, device)
+            # create new session and return token using credentials.
+            token = self.service.create_token(dto.username, dto.password, request.state.device)
             response = JSONResponse(dict(token=token))
             response.set_cookie("token", token)
             return response
 
         @self.app.head(V2_USER_AUTHENTICATION, tags=["Authentication"])
         @authorize()
-        async def user_test(request: Request):
+        async def user_token(request: Request):
+            # refresh existing user token using old token, user must be legislate.
             token = await self.service.update_token(request.state.session, request.state.device)
             response = JSONResponse(dict(token=token))
             response.set_cookie("token", token)
@@ -82,8 +83,8 @@ class UserContext(BaseContext):
         @self.app.delete(V2_USER_AUTHENTICATION, tags=["Authentication"])
         @authorize()
         async def user_logout(request: Request):
-            device = request.state.device
-            await self.service.terminate_token(request.state.session, device)
+            # close the user session using existing token
+            await self.service.terminate_token(request.state.session, request.state.device)
             response = JSONResponse(dict(response="Good by :)"))
             response.delete_cookie("token")
             return response

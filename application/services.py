@@ -7,3 +7,4 @@ def get_uuid():
 
 def get_now_ts():
     return str(datetime.datetime.now(datetime.UTC))
+

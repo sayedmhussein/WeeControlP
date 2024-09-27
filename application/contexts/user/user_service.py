@@ -2,7 +2,7 @@ from typing import Union
 
 from sqlalchemy import select, and_, or_, insert, update
 
-from application.exceptions import NotFoundException, NotAllowedException
+from application.exceptions import NotFoundException, NotAllowedException, BadRequestException
 from application.services import get_uuid, get_now_ts
 from infrastructure.repository import Database
 from server.services.secuity import get_jwt, get_claims
@@ -13,11 +13,13 @@ class UserService(object):
         self.db = db
 
     def create_token(self, username_or_email: str, password: str, device: str) -> str:
+        if len(device) < 1:
+            raise BadRequestException("No device was supplies", "")
         users = self.db.Tables.Users
-        sessions = self.db.Tables.Sessions
-        claims = self.db.Tables.Claims
+        sessions = self.db.Tables.UserSessions
+        claims = self.db.Tables.UserClaims
         with (self.db.Session() as session):
-            q_user = select(users.c.userid, users.c.suspendargs).where(and_(or_(users.c.username == username_or_email, users.c.email == username_or_email), users.c.password == password))
+            q_user = select(users.c.userid, users.c.suspendargs).where(and_(or_(users.c.username == username_or_email.lower(), users.c.email == username_or_email.lower()), users.c.password == password))
             user = session.execute(q_user).first()
             if user is None:
                 raise NotFoundException("User not found", "")
@@ -51,7 +53,7 @@ class UserService(object):
         return get_jwt(claims)
 
     async def terminate_token(self, session_id: str, device: str) -> None:
-        sessions = self.db.Tables.Sessions
+        sessions = self.db.Tables.UserSessions
         if not await get_recent_claims(self.db, session_id, device):
             raise NotFoundException("", "")
 
@@ -67,14 +69,12 @@ class UserService(object):
             await session.execute(stmt1)
             await session.commit()
 
-        print(f"logging activities{session_id}, {responded}, {route}, {method}")
-
 
 
 async def get_recent_claims(db, session_id: str, device: str) -> Union[dict, None]:
-    sessions = db.Tables.Sessions
+    sessions = db.Tables.UserSessions
     users = db.Tables.Users
-    claims = db.Tables.Claims
+    claims = db.Tables.UserClaims
     async with (db.SessionAsync() as session):
         stmt = select(claims.c.claimtype, claims.c.claimvalue).join(users, users.c.userid == claims.c.userid).join(
             sessions, sessions.c.userid == users.c.userid).where(
