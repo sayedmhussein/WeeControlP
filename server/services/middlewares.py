@@ -1,13 +1,10 @@
 import time
-from http import HTTPStatus
 
 from fastapi import FastAPI
-from pydantic import BaseModel
 from starlette.requests import Request
 from starlette.responses import Response, JSONResponse
-from starlette.status import HTTP_401_UNAUTHORIZED
+from starlette.status import HTTP_403_FORBIDDEN
 
-from server.routes import PG_LOGIN, PG_INDEX
 from server.services.secuity import get_claims
 
 
@@ -29,5 +26,22 @@ class ApplicationMW(object):
         async def inject_token_in_request(request: Request, call_next) -> Response:
             token = request.cookies.get("token")
             request.state.token = token
+            device = ";".join(filter(None, [
+                request.headers.get("Device"),
+                request.headers.get("Host"),
+                request.headers.get("User-Agent")]))
+            request.state.device = device
+
+            claims = get_claims(token)
+            if claims is not None:
+                request.state.token = token
+                claims = get_claims(token)
+                request.state.session = claims["session"]
+                request.state.device = claims["device"]
+
+                if device != claims["device"]:
+                    response = JSONResponse("User don't have right to access the resource", status_code=HTTP_403_FORBIDDEN)
+                    return response
+
             response = await call_next(request)
             return response

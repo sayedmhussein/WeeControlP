@@ -22,11 +22,11 @@ def get_claims(encoded_jwt: str):
         return claims
     except jwt.ExpiredSignatureError:
         return None
-    except [jwt.exceptions.InvalidTokenError, jwt.exceptions.DecodeError, jwt.exceptions.ExpiredSignatureError,
+    except (jwt.exceptions.InvalidTokenError, jwt.exceptions.DecodeError, jwt.exceptions.ExpiredSignatureError,
             jwt.exceptions.InvalidAudienceError, jwt.exceptions.InvalidIssuerError,
             jwt.exceptions.InvalidIssuedAtError, jwt.exceptions.ImmatureSignatureError,
             jwt.exceptions.InvalidKeyError, jwt.exceptions.InvalidAlgorithmError,
-            jwt.exceptions.MissingRequiredClaimError]:
+            jwt.exceptions.MissingRequiredClaimError):
         return None
     except jwt:
         return None

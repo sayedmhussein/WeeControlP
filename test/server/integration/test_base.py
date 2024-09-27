@@ -4,7 +4,7 @@ import unittest
 from starlette.responses import Response
 from starlette.testclient import TestClient
 
-from infrastructure.repository import get_db_session
+from infrastructure.repository import Database
 from server.main import get_app
 from server.routes import V2_USER_AUTHENTICATION
 
@@ -15,7 +15,7 @@ def encode(text):
 
 class BaseTestCase(unittest.TestCase):
     def setUp(self):
-        self.db = get_db_session(in_memory=True)
+        self.db = Database()
         self.client = TestClient(get_app(self.db))
         self.client.headers["Content-Type"] = "application/json"
         self.client.headers["User-Agent"] = "this is a test case"

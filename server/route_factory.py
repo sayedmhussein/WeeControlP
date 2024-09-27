@@ -4,6 +4,9 @@ from typing import Annotated, Union, Final
 from fastapi import FastAPI, Response
 from fastapi.responses import JSONResponse
 from fastapi.params import Cookie
+from starlette.requests import Request
+from starlette.responses import HTMLResponse
+from starlette.templating import Jinja2Templates
 
 from server.routers.user_router import UserContext
 from server.routes import PG_INDEX
@@ -23,10 +26,12 @@ class RoutingFactory(object):
 
 
 def index_route(app: FastAPI):
-    @app.get(PG_INDEX)
-    def index(ads_id: Annotated[str | None, Cookie()] = None, token: Annotated[str | None, Cookie()] = None):
-        content = {"message": f"Come to the dark side, we have cookies {ads_id}, {token}"}
-        response = JSONResponse(content=content)
+    @app.get(PG_INDEX, response_class=HTMLResponse)
+    def index(request: Request, ads_id: Annotated[str | None, Cookie()] = None, token: Annotated[str | None, Cookie()] = None):
+        templates = Jinja2Templates(directory="templates")
+        response = templates.TemplateResponse(request=request, name="hello.html", context={"person": ads_id})
+        # content = {"message": f"Come to the dark side, we have cookies {ads_id}, {token}"}
+        # response = JSONResponse(content=content)
         response.set_cookie("ads_id", "hello world")
         return response
 

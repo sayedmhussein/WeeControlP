@@ -64,8 +64,16 @@ class UserContext(BaseContext):
 
         @self.app.post(V2_USER_AUTHENTICATION, tags=["Authentication"])
         def user_login(dto: LoginDto, request: Request):
-            device = "".join(filter(None, [request.headers.get("Host"), request.headers.get("User-Agent")]))
+            device = request.state.device
             token = self.service.create_token(dto.username, dto.password, device)
+            response = JSONResponse(dict(token=token))
+            response.set_cookie("token", token)
+            return response
+
+        @self.app.head(V2_USER_AUTHENTICATION, tags=["Authentication"])
+        @authorize()
+        async def user_test(request: Request):
+            token = await self.service.update_token(request.state.session, request.state.device)
             response = JSONResponse(dict(token=token))
             response.set_cookie("token", token)
             return response
@@ -74,8 +82,8 @@ class UserContext(BaseContext):
         @self.app.delete(V2_USER_AUTHENTICATION, tags=["Authentication"])
         @authorize()
         async def user_logout(request: Request):
-            device = request.headers.get("Host") + request.headers.get("User-Agent")
-            await self.service.terminate_token(request.state.token, device)
+            device = request.state.device
+            await self.service.terminate_token(request.state.session, device)
             response = JSONResponse(dict(response="Good by :)"))
             response.delete_cookie("token")
             return response
