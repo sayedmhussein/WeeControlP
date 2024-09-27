@@ -45,27 +45,12 @@ class Database(object):
     Session = SessionLocal
     SessionAsync: async_sessionmaker[AsyncSession] = SessionLocalAsync
 
-    @staticmethod
-    def tbl_users():
-        """
-        Columns:
-            userid: uuid pk;required;unique
-            supervisorid: uuid nullable <- user.userid
-            username: string required;unique
-            email: string required;unique
-            password: string required
-            contact: uuid nullable <- contact.contactid
-        ..
-        :return:
-        The "user" table.
-        """
-        return metadata.tables["user"]
-
-
     class Tables(object):
         Users = metadata.tables["user"]
-        Sessions = metadata.tables["session"]
-        Claims = metadata.tables["claim"]
+        Sessions = metadata.tables["usersession"]
+        UserNotifications = metadata.tables["usernotification"]
+        UserLogs = metadata.tables["userlog"]
+        Claims = metadata.tables["userclaim"]
         Addresses = metadata.tables["address"]
         Contacts = metadata.tables["contact"]
         Offices = metadata.tables["office"]

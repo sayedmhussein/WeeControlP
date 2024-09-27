@@ -13,7 +13,7 @@ class UserService(object):
         self.db = db
 
     def create_token(self, username_or_email: str, password: str, device: str) -> str:
-        users = self.db.tbl_users()
+        users = self.db.Tables.Users
         sessions = self.db.Tables.Sessions
         claims = self.db.Tables.Claims
         with (self.db.Session() as session):
@@ -44,7 +44,7 @@ class UserService(object):
 
 
     async def update_token(self, token: str, device: str) -> str:
-        claims = await self.get_recent_claims(token, device)
+        claims = await get_recent_claims(self.db, token, device)
         if not claims:
             raise NotFoundException("", "")
 
@@ -52,7 +52,7 @@ class UserService(object):
 
     async def terminate_token(self, session_id: str, device: str) -> None:
         sessions = self.db.Tables.Sessions
-        if not await self.get_recent_claims(session_id, device):
+        if not await get_recent_claims(self.db, session_id, device):
             raise NotFoundException("", "")
 
         async with (self.db.SessionAsync() as session):
@@ -60,25 +60,37 @@ class UserService(object):
             await session.commit()
             return
 
-    async def get_recent_claims(self, session_id: str, device: str) -> Union[dict, None]:
-        sessions = self.db.Tables.Sessions
-        users = self.db.Tables.Users
-        claims = self.db.Tables.Claims
-        async with (self.db.SessionAsync() as session):
-            stmt = select(claims.c.claimtype, claims.c.claimvalue).join(users, users.c.userid == claims.c.userid).join(sessions, sessions.c.userid == users.c.userid).where(
-                and_(
-                    claims.c.revoked_ts == None,
-                    users.c.suspendargs == None,
-                    sessions.c.terminated_ts == None,
-                    sessions.c.sessionid == session_id,
-                    sessions.c.device == device))
+    async def log_activity(self, session_id: str, route: str, method: str, responded: int):
+        UserLogs = self.db.Tables.UserLogs
+        stmt1 = insert(UserLogs).values(sessionid=session_id, log_ts=get_now_ts(), route=route, method=method, responded=responded)
+        async with self.db.SessionAsync() as session:
+            await session.execute(stmt1)
+            await session.commit()
 
-            claims_ = await session.execute(stmt)
-            claims_ = claims_.all()
-            if len(claims_) > 0:
-                claims__ = {"session": session_id, "device": device}
-                for c, d in claims_:
-                    claims__[c] = d
-                return claims__
+        print(f"logging activities{session_id}, {responded}, {route}, {method}")
 
-            return None
+
+
+async def get_recent_claims(db, session_id: str, device: str) -> Union[dict, None]:
+    sessions = db.Tables.Sessions
+    users = db.Tables.Users
+    claims = db.Tables.Claims
+    async with (db.SessionAsync() as session):
+        stmt = select(claims.c.claimtype, claims.c.claimvalue).join(users, users.c.userid == claims.c.userid).join(
+            sessions, sessions.c.userid == users.c.userid).where(
+            and_(
+                claims.c.revoked_ts == None,
+                users.c.suspendargs == None,
+                sessions.c.terminated_ts == None,
+                sessions.c.sessionid == session_id,
+                sessions.c.device == device))
+
+        claims_ = await session.execute(stmt)
+        claims_ = claims_.all()
+        if len(claims_) > 0:
+            claims__ = {"session": session_id, "device": device}
+            for c, d in claims_:
+                claims__[c] = d
+            return claims__
+
+        return None

@@ -6,6 +6,7 @@ PG_LOGIN = "/login"
 PG_HELP = "/help"
 PG_USER: Final[str] = "/user"
 
+V2_ESSENTIAL: Final[str] = "/api/v2/essential"
 V2_USER: Final[str] = "/api/v2/user"
 V2_USER_AUTHENTICATION: Final[str] = "/api/v2/user/authentication"
 

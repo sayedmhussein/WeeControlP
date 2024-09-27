@@ -9,7 +9,7 @@ from starlette.responses import HTMLResponse
 from starlette.templating import Jinja2Templates
 
 from server.routers.user_router import UserContext
-from server.routes import PG_INDEX
+from server.routes import PG_INDEX, V2_ESSENTIAL
 
 
 class RoutingFactory(object):
@@ -30,12 +30,10 @@ def index_route(app: FastAPI):
     def index(request: Request, ads_id: Annotated[str | None, Cookie()] = None, token: Annotated[str | None, Cookie()] = None):
         templates = Jinja2Templates(directory="templates")
         response = templates.TemplateResponse(request=request, name="hello.html", context={"person": ads_id})
-        # content = {"message": f"Come to the dark side, we have cookies {ads_id}, {token}"}
-        # response = JSONResponse(content=content)
         response.set_cookie("ads_id", "hello world")
         return response
 
-    @app.get("/items/{item_id}")
+    @app.get(V2_ESSENTIAL+"/{item_id}")
     async def read_item(item_id: int, q: Union[str, None] = None):
         return {"item_id": item_id, "q": q}
 

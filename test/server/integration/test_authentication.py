@@ -96,5 +96,21 @@ class AuthenticationTestCase(BaseTestCase):
         response = self.client.delete(path)
         assert response.is_success
 
+    def test_change_device(self):
+        self.client.headers["Device"] = "Test 1"
+        response = self.authenticate()
+        assert response.cookies.get("token") is not None
+
+        response = self.client.head(path)
+        assert response.is_success
+
+        self.client.headers["Device"] = "Test 2"
+        response = self.client.head(path)
+        assert response.is_client_error
+
+        self.client.headers["Device"] = "Test 1"
+        response = self.client.head(path)
+        assert response.is_success
+
 if __name__ == '__main__':
     unittest.main()
