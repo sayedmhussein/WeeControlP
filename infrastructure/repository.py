@@ -1,6 +1,6 @@
 import os
 
-from sqlalchemy import create_engine, MetaData, text
+from sqlalchemy import create_engine, MetaData, text, update
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import sessionmaker, scoped_session, Session
 
@@ -25,22 +25,6 @@ def get_session():
     finally:
         db.close()
 
-with SessionLocal() as conn:
-    a = conn.execute(text("SELECT * FROM user"))
-    print(a.all())
-
-with engine.connect() as conn:
-    a = conn.execute(text("SELECT * FROM user"))
-    print(a.all())
-
-    users = metadata.tables['user']
-    b = conn.execute(users.select())
-    # b2 = conn.execute(users.delete().where(users.c.email == "some_other2"))
-    # b1 = conn.execute(users.insert().values(userid="temp2", email="some_other2", password="some_other"))
-    print(b.all())
-    print(conn.execute(users.select().where(users.c.username == "username")).first())
-
-
 class Database(object):
     Session: sessionmaker[Session] = SessionLocal
     SessionAsync: async_sessionmaker[AsyncSession] = SessionLocalAsync
@@ -55,3 +39,25 @@ class Database(object):
         UserNotifications = metadata.tables["usernotification"]
         UserLogs = metadata.tables["userlog"]
         UserClaims = metadata.tables["userclaim"]
+
+
+def run_query():
+    with SessionLocal() as conn:
+        stmt = update(Database.Tables.Users).values(salt=b'\xa6\xf5]Y8\xb2\xf3L\x10c\x92t\xa8\xb2J\x00', password=b'6\x1ew\x8d\x18\x84Tv)\x8a\xf8\xfd\xc0\xba\xd5\x8b\\\x9a\xb4S?9)\xf9\x0e\x9f\xae\xf2\xfd\xe7\x1e\xd0')
+        a = conn.execute(stmt)
+        conn.commit()
+
+    with SessionLocal() as conn:
+        a = conn.execute(text("SELECT * FROM user"))
+        print(a.all())
+
+    with engine.connect() as conn:
+        a = conn.execute(text("SELECT * FROM user"))
+        print(a.all())
+
+        users = metadata.tables['user']
+        b = conn.execute(users.select())
+        print(b.all())
+        print(conn.execute(users.select().where(users.c.username == "username")).first())
+
+# run_query()

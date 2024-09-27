@@ -3,7 +3,7 @@ from typing import Union
 from sqlalchemy import select, and_, or_, insert, update
 
 from application.exceptions import NotFoundException, NotAllowedException, BadRequestException
-from application.services import get_uuid, get_now_ts
+from application.services import get_uuid, get_now_ts, is_correct_password
 from infrastructure.repository import Database
 from server.services.secuity import get_jwt, get_claims
 
@@ -19,9 +19,11 @@ class UserService(object):
         sessions = self.db.Tables.UserSessions
         claims = self.db.Tables.UserClaims
         with (self.db.Session() as session):
-            q_user = select(users.c.userid, users.c.suspendargs).where(and_(or_(users.c.username == username_or_email.lower(), users.c.email == username_or_email.lower()), users.c.password == password))
+            q_user = select(users.c.userid, users.c.salt, users.c.password, users.c.suspendargs).where(and_(or_(users.c.username == username_or_email.lower(), users.c.email == username_or_email.lower()), True))
             user = session.execute(q_user).first()
             if user is None:
+                raise NotFoundException("User not found", "")
+            if not is_correct_password(user.salt, user.password, password):
                 raise NotFoundException("User not found", "")
 
             if user.suspendargs is not None:
