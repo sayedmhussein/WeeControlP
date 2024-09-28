@@ -29,24 +29,10 @@ class UserContext(BaseContext):
         super().__init__(app, db)
         self.service = UserService(db)
 
-    def setup_routing(self):
-        @self.app.get(PG_USER, tags=["Webpage"])
-        def user_main_page():
-            return "This is user main page"
-
-        @self.app.post(V2_USER, tags=["Webpage"])
-        def login(dto: LoginDto):
-            # Create cookie which contains the user details.
-            return "do_the_login()"
-
-        @self.app.get(PG_LOGIN, tags=["Webpage"])
-        def login_page():
-            return "This is the login screen"
-
-    async def setup_routing_async(self):
+    async def setup_routing(self):
         @self.app.get(PG_USER + "{username}", tags=["User"])
         async def show_user_profile(username):
-            # show the user profile for that user
+            # get the user profile for that user
             return f'User {escape(username)}'
 
         @self.app.post(PG_USER, tags=["User"])
@@ -70,7 +56,7 @@ class UserContext(BaseContext):
             response.set_cookie("token", token)
             return response
 
-        @self.app.head(V2_USER_AUTHENTICATION, tags=["Authentication"])
+        @self.app.get(V2_USER_AUTHENTICATION, tags=["Authentication"])
         @authorize()
         async def user_token(request: Request):
             # refresh existing user token using old token, user must be legislate.

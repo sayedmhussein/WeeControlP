@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e4199f0-6e25-4c80-974b-473ab86a8245" name="Changes" comment="Init Commit">
+    <list default="true" id="3e4199f0-6e25-4c80-974b-473ab86a8245" name="Changes" comment="Refactors">
+      <change afterPath="$PROJECT_DIR$/server/routers/webpage_router.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/contexts/user/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/contexts/user/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/contexts/user_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/services.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/infrastructure/db.db" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/db.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/route_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/route_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/base_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/base_router.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/user_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user_router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/services/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/middlewares.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/templates/hello.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/integration/test_authentication.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/integration/test_authentication.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,26 +23,26 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Python Unit Test" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "sayedmhussein"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;sayedmhussein&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/sayedmhussein/WeeControlP.git",
-    "accountId": "7075f28a-d5f9-491c-a93f-d0d6584cf0a2"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sayedmhussein/WeeControlP.git&quot;,
+    &quot;accountId&quot;: &quot;7075f28a-d5f9-491c-a93f-d0d6584cf0a2&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -54,33 +54,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for test_authentication.AuthenticationTestCase.executor": "Run",
-    "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_head.executor": "Run",
-    "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_invalid_user.executor": "Run",
-    "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_two_sessions.executor": "Run",
-    "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_valid_login.executor": "Run",
-    "Python tests.Python tests for test_authentication.AuthenticationTestCase.test_when_no_device_or_headers.executor": "Run",
-    "Python tests.Python tests for test_base.BaseTestCase.executor": "Debug",
-    "Python tests.Python tests for test_services.MyTestCase.test_something.executor": "Run",
-    "Python tests.Python tests in integration.executor": "Run",
-    "Python tests.Python tests in jwt_service_test.py.executor": "Run",
-    "Python tests.Python tests in test.executor": "Run",
-    "Python tests.Python tests in test_authentication.py.executor": "Run",
-    "Python tests.Python tests in test_base.py.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.middlewares.executor": "Run",
-    "Python.repository.executor": "Run",
-    "Python.route_factory.executor": "Run",
-    "Python.services.executor": "Run",
-    "Python.user.executor": "Run",
-    "Python.user_context.executor": "Run",
-    "Python.user_service.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_head.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_invalid_user.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_two_sessions.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_valid_login.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_authentication.AuthenticationTestCase.test_when_no_device_or_headers.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_base.BaseTestCase.executor&quot;: &quot;Debug&quot;,
+    &quot;Python tests.Python tests for test_services.MyTestCase.test_something.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in integration.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in jwt_service_test.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_authentication.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_base.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.middlewares.executor&quot;: &quot;Run&quot;,
+    &quot;Python.repository.executor&quot;: &quot;Run&quot;,
+    &quot;Python.route_factory.executor&quot;: &quot;Run&quot;,
+    &quot;Python.services.executor&quot;: &quot;Run&quot;,
+    &quot;Python.user.executor&quot;: &quot;Run&quot;,
+    &quot;Python.user_context.executor&quot;: &quot;Run&quot;,
+    &quot;Python.user_service.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/application/contexts" />
@@ -237,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727450294444</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Refactors">
+      <option name="closed" value="true" />
+      <created>1727451458451</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727451458451</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -253,6 +261,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Init Commit" />
+    <MESSAGE value="Refactors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactors" />
   </component>
 </project>

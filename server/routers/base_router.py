@@ -10,7 +10,3 @@ class BaseContext(ABC):
     @abstractmethod
     def setup_routing(self):
         pass
-
-    @abstractmethod
-    async def setup_routing_async(self):
-        pass

@@ -1,15 +1,12 @@
+import json
+from typing import Union
 
-from typing import Annotated, Union, Final
-
-from fastapi import FastAPI, Response
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from fastapi.params import Cookie
-from starlette.requests import Request
-from starlette.responses import HTMLResponse
-from starlette.templating import Jinja2Templates
 
 from server.routers.user_router import UserContext
-from server.routes import PG_INDEX, V2_ESSENTIAL, ClaimTypes
+from server.routers.webpage_router import add_webpages
+from server.routes import V2_ESSENTIAL, ClaimTypes
 
 
 class RoutingFactory(object):
@@ -18,27 +15,20 @@ class RoutingFactory(object):
         self.db = db
 
     def setup_routes(self):
-        index_route(self.app)
-        UserContext(self.app, self.db).setup_routing()
+        add_webpages(self.app, self.db)
+        add_essentials(self.app)
 
     async def setup_routes_async(self):
-        await UserContext(self.app, self.db).setup_routing_async()
+        await UserContext(self.app, self.db).setup_routing()
 
 
-def index_route(app: FastAPI):
-    @app.get(PG_INDEX, response_class=HTMLResponse)
-    def index(request: Request, ads_id: Annotated[str | None, Cookie()] = None, token: Annotated[str | None, Cookie()] = None):
-        templates = Jinja2Templates(directory="templates")
-        response = templates.TemplateResponse(request=request, name="hello.html", context={"person": ads_id})
-        response.set_cookie("ads_id", "hello world")
-        return response
-
-    @app.get(V2_ESSENTIAL+"/{name}")
+def add_essentials(app: FastAPI):
+    @app.get(V2_ESSENTIAL+"/{name}", tags=["Essential"])
     async def read_item(name: str, q: Union[str, None] = None):
         if name == "countries":
             return dict(US="USA", EG="Egypt", SA="Saudi", CN="China")
         elif name == "claims":
-            return list([e.value for e in ClaimTypes])
+            return json.dumps(ClaimTypes)
         else:
             return JSONResponse("not found", status_code=404)
 

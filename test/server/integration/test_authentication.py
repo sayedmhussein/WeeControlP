@@ -41,7 +41,7 @@ class AuthenticationTestCase(BaseTestCase):
         response = self.authenticate()
         cookie1 = self.client.cookies.get("token")
         assert response.is_success
-        response = self.client.head(path)
+        response = self.client.get(path)
         assert response.is_success
 
         # Second Login
@@ -50,7 +50,7 @@ class AuthenticationTestCase(BaseTestCase):
         response = self.authenticate()
         cookie2 = self.client.cookies.get("token")
         assert response.is_success
-        response = self.client.head(path)
+        response = self.client.get(path)
         assert response.is_success
 
         # Terminate First With Wrong Device
@@ -64,7 +64,7 @@ class AuthenticationTestCase(BaseTestCase):
         self.client.headers["User-Agent"] = "Test 1"
         self.client.cookies.clear()
         self.client.cookies["token"] = cookie1
-        response = self.client.head(path)
+        response = self.client.get(path)
         assert response.is_success
 
         # Terminate First With Correct Device
@@ -78,7 +78,7 @@ class AuthenticationTestCase(BaseTestCase):
         self.client.headers["User-Agent"] = "Test 1"
         self.client.cookies.clear()
         self.client.cookies["token"] = cookie1
-        response = self.client.head(path)
+        response = self.client.get(path)
         print("Bla is: ", response.text)
         assert response.is_client_error
 
@@ -86,7 +86,7 @@ class AuthenticationTestCase(BaseTestCase):
         self.client.headers["User-Agent"] = "Test 2"
         self.client.cookies.clear()
         self.client.cookies["token"] = cookie2
-        response = self.client.head(path)
+        response = self.client.get(path)
         assert response.is_success
 
         # Terminate Second With Correct Device
@@ -101,15 +101,15 @@ class AuthenticationTestCase(BaseTestCase):
         response = self.authenticate()
         assert response.cookies.get("token") is not None
 
-        response = self.client.head(path)
+        response = self.client.get(path)
         assert response.is_success
 
         self.client.headers["Device"] = "Test 2"
-        response = self.client.head(path)
+        response = self.client.get(path)
         assert response.is_client_error
 
         self.client.headers["Device"] = "Test 1"
-        response = self.client.head(path)
+        response = self.client.get(path)
         assert response.is_success
 
     def test_when_no_device_or_headers(self):
